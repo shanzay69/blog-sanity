@@ -1,7 +1,7 @@
+import Image from "next/image";
 export default function About() {
   return (
     <div className="mb-10 flex flex-col items-center lg:mb-14 lg:flex-row lg:justify-between">
-      {/* Text Section */}
       <div className="flex flex-col lg:w-1/2 space-y-10">
         <h1 className="pt-28 text-center text-black font-bold leading-tight tracking-tighter text-5xl transition duration-300 transform hover:scale-110">
           ABOUT FOR ME AND MYSELF
@@ -23,13 +23,13 @@ export default function About() {
         in Mannheim to become the world’s largest automobile plant of its day would have been unthinkable.
         </p>
       </div>
-
-      {/* Image Section */}
       <div className="lg:w-1/2 ml-6">
-        <img
-          src="https://group.mercedes-benz.com/bilder/konzern/tradition/geschichte/anfaenge-des-automobils/benz-patent-motorwagen-w1366xh768-cutout.png"
-          alt="car"
-          className="w-full h-auto object-cover mt-20"
+        <Image
+          src="/images/motorcar.jpeg"
+          alt="motorcar" 
+          width={500} 
+          height={300} 
+          className="w-full h-auto object-cover mt-20 rounded-lg"
         />
       </div>
     </div>

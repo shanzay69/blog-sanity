@@ -1,10 +1,10 @@
  "use client";
 import { useState } from "react";
-
+import Image from "next/image";
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // For disabling button during submit
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const validateForm = () => 
     formData.name && formData.email && formData.message && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email);
@@ -21,7 +21,7 @@ const Contact = () => {
       return;
     }
     setStatus("Sending...");
-    setIsSubmitting(true); // Disable button
+    setIsSubmitting(true); 
 
     try {
       const response = await fetch("/api/contact", {
@@ -42,18 +42,21 @@ const Contact = () => {
     } catch (error) {
       setStatus("Message bhejne mein error. Dobara koshish karein.");
     } finally {
-      setIsSubmitting(false); // Enable button again
+      setIsSubmitting(false); 
     }
   };
 
   return (
     <section className="relative flex items-center justify-center min-h-screen bg-gray-400">
       <div className="z-10 flex flex-col lg:flex-row items-center lg:space-x-20 bg-white rounded-lg shadow-lg px-8 py-12 lg:py-16 w-11/12 max-w-5xl transition duration-300 transform hover:scale-110">
-        {/* Left Section: Illustration */}
+      
         <div className="w-full lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
-          <img
-            src="https://p.kindpng.com/picc/s/490-4900252_free-svg-contact-contact-us-hd-png-download.png "
-            alt="Envelope Illustration"
+          <Image
+            src="/images/contact.png" 
+            alt="contact"
+            layout="responsive" 
+              width={100}     
+                height={50} 
             className="w-full h-auto object-cover"
           />
         </div>
@@ -106,7 +109,7 @@ const Contact = () => {
             <button
               type="submit"
               className="w-full py-2 px-6 bg-purple-600 text-white font-semibold rounded-md shadow-lg hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-              disabled={isSubmitting} // Disable button during submission
+              disabled={isSubmitting} 
             >
               {isSubmitting ? "Sending..." : "Send"}
             </button>
