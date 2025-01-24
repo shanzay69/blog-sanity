@@ -24,7 +24,6 @@ import CommentSec from "./commentsec/page";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch({
     query: settingsQuery,
-    // Metadata should never contain stega
     stega: false,
   });
   const title = settings?.title || demo.title;
@@ -37,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ? new URL(settings.ogImage.metadataBase)
       : undefined;
   } catch {
-    // ignore
+    
   }
   return {
     metadataBase,
