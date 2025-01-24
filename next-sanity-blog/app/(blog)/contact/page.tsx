@@ -1,27 +1,28 @@
  "use client";
 import { useState } from "react";
 import Image from "next/image";
+
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateForm = () => 
+  const validateForm = () =>
     formData.name && formData.email && formData.message && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email);
 
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
-   setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (!validateForm()) { 
+    if (!validateForm()) {
       setStatus("Sab fields bharna zaroori hain ya email galat hai.");
       return;
     }
     setStatus("Sending...");
-    setIsSubmitting(true); 
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/contact", {
@@ -34,7 +35,8 @@ const Contact = () => {
 
       if (response.ok) {
         setStatus("Message successfully bheja gaya!");
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "" }); 
+        setTimeout(() => setStatus(""), 2000); 
       } else {
         const { error } = await response.json();
         setStatus(error || "Kuch galat hua, dobara koshish karein.");
@@ -42,21 +44,20 @@ const Contact = () => {
     } catch (error) {
       setStatus("Message bhejne mein error. Dobara koshish karein.");
     } finally {
-      setIsSubmitting(false); 
+      setIsSubmitting(false);
     }
   };
 
   return (
     <section className="relative flex items-center justify-center min-h-screen bg-gray-400">
       <div className="z-10 flex flex-col lg:flex-row items-center lg:space-x-20 bg-white rounded-lg shadow-lg px-8 py-12 lg:py-16 w-11/12 max-w-5xl transition duration-300 transform hover:scale-110">
-      
         <div className="w-full lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
           <Image
-            src="/images/contact.png" 
+            src="/images/contact.png"
             alt="contact"
-            layout="responsive" 
-              width={100}     
-                height={50} 
+            layout="responsive"
+            width={100}
+            height={50}
             className="w-full h-auto object-cover"
           />
         </div>
@@ -109,13 +110,17 @@ const Contact = () => {
             <button
               type="submit"
               className="w-full py-2 px-6 bg-purple-600 text-white font-semibold rounded-md shadow-lg hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-              disabled={isSubmitting} 
+              disabled={isSubmitting}
             >
               {isSubmitting ? "Sending..." : "Send"}
             </button>
           </form>
           {status && (
-            <div className={`mt-4 text-center text-sm ${status.includes("successfully") ? 'text-green-600' : 'text-red-600'}`}>
+            <div
+              className={`mt-4 text-center text-sm ${
+                status.includes("successfully") ? "text-green-600" : "text-red-600"
+              }`}
+            >
               {status}
             </div>
           )}
@@ -123,5 +128,6 @@ const Contact = () => {
       </div>
     </section>
   );
-}
+};
+
 export default Contact;
